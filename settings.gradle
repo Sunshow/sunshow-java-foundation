@@ -1,2 +1,4 @@
 rootProject.name = 'sunshow-java-foundation'
+include 'foundation-base'
+include 'foundation-security'
 

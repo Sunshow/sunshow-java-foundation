@@ -4,10 +4,11 @@ plugins {
 }
 
 subprojects {
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+
     group 'net.sunshow.foundation'
     version '1.0-SNAPSHOT'
-
-    apply plugin: 'java-library'
 
     // support jdk1.8 later
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -15,6 +16,10 @@ subprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
+    }
+
+    tasks.withType(GenerateModuleMetadata) {
+        enabled = false
     }
 
     repositories {
@@ -90,5 +95,9 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    if (file("${rootDir}/publish.gradle").exists()) {
+        apply from: "${rootDir}/publish.gradle"
     }
 }

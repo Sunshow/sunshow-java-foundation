@@ -26,3 +26,5 @@ build/
 **/build/
 !gradle-wrapper.jar
 .gradletasknamecache
+
+publish.gradle
