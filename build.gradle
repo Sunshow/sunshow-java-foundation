@@ -1,0 +1,94 @@
+plugins {
+    // gradle plugin version management
+    id 'org.springframework.boot' version '2.6.1' apply false
+}
+
+subprojects {
+    group 'net.sunshow.foundation'
+    version '1.0-SNAPSHOT'
+
+    apply plugin: 'java-library'
+
+    // support jdk1.8 later
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+        }
+    }
+
+    ext {
+        lombokVersion = '1.18.20'
+
+        slf4jVersion = '1.7.31'
+
+        guavaVersion = '30.1.1-jre'
+
+        commonsLang3Version = '3.12.0'
+        commonsBeanUtilsVersion = '1.9.4'
+        commonsIOVersion = '2.11.0'
+        commonsTextVersion = '1.9'
+
+        dozerVersion = '6.5.2'
+
+        janinoVersion = '3.1.6'
+
+        bcprovVersion = '1.69'
+
+        shiroVersion = '1.8.0'
+    }
+
+    dependencyManagement {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
+            cacheDynamicVersionsFor 0, 'seconds'
+        }
+
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+        }
+
+        dependencies {
+            dependency "org.projectlombok:lombok:${lombokVersion}"
+
+            dependency "org.slf4j:slf4j-api:${slf4jVersion}"
+
+            dependency "com.google.guava:guava:${guavaVersion}"
+
+            dependency "commons-beanutils:commons-beanutils:${commonsBeanUtilsVersion}"
+            dependency "org.apache.commons:commons-lang3:${commonsLang3Version}"
+            dependency "org.apache.commons:commons-text:${commonsTextVersion}"
+            dependency "commons-io:commons-io:${commonsIOVersion}"
+
+            dependency "com.github.dozermapper:dozer-core:${dozerVersion}"
+
+            dependency "org.codehaus.janino:janino:${janinoVersion}"
+
+            dependency "org.bouncycastle:bcprov-jdk15to18:${bcprovVersion}"
+
+            dependency "org.apache.shiro:shiro-core:${shiroVersion}"
+            dependency "org.apache.shiro:shiro-spring:${shiroVersion}"
+            dependency "org.apache.shiro:shiro-spring-boot-web-starter:${shiroVersion}"
+        }
+    }
+
+    dependencies {
+        testImplementation 'org.junit.jupiter:junit-jupiter-api'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        implementation 'org.slf4j:slf4j-api'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
